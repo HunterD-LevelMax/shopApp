@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_settings_50"
+        android:orderInCategory="1"
+        android:title="@string/title_settings"
+        />
+
+    <item
+        android:id="@+id/terms_of_use"
+        android:icon="@drawable/ic_baseline_wysiwyg_50"
+        android:orderInCategory="2"
+        android:title="@string/term_of_use" />
+
+    <item
+        android:id="@+id/about"
+        android:icon="@drawable/icon_app"
+        android:orderInCategory="3"
+        android:title="@string/title_version" />
+
+</menu>
