@@ -1,69 +1,147 @@
 package com.codeuphoria.alco38.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import com.codeuphoria.alco38.R
+import com.codeuphoria.alco38.*
 import com.codeuphoria.alco38.adapter.ProductAdapter
 import com.codeuphoria.alco38.data.Product
 import com.codeuphoria.alco38.databinding.ActivityMainBinding
-import com.codeuphoria.alco38.replaceActivity
+import okhttp3.*
+import okio.IOException
+import org.json.JSONArray
+import org.json.JSONObject
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val adapter = ProductAdapter()
-    private val imageIdList = listOf(
-        R.drawable.cola,
-        R.drawable.potato_chips,
-        R.drawable.snack,
-        R.drawable.beer,
-        R.drawable.wine_icon
-    )
-    private var index = 0
+
+    private val adapter = ProductAdapter(productList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val buttonShopBasket = binding.buttonShopBasket
-        val countShop = binding.countShop
-        val recyclerProducts = binding.recyclerProducts
+        binding.apply {
+            buttonShopBasket.setOnClickListener {
 
-        buttonShopBasket.setOnClickListener {
-            replaceActivity(ShoppingBasketActivity())
+
+                if (checkShopList()) {
+                    replaceActivity(ShoppingBasketActivity())
+                } else {
+                    showToast("Выберите продукты")
+                }
+            }
         }
 
         init()
+        requestServer()
+    }
+
+    fun checkShopList(): Boolean {
+        return productListInShop.size != 0
     }
 
     private fun init() {
         binding.apply {
-            recyclerProducts.layoutManager = GridLayoutManager(this@MainActivity, 3)
+            recyclerProducts.layoutManager = GridLayoutManager(this@MainActivity, 1)
             recyclerProducts.adapter = adapter
-
-            for(i in 1..10){
-                if (index > imageIdList.size - 1) index = 0
-                val product = Product(imageIdList[index], "Product $index", "100 рублей")
-                adapter.addProduct(product)
-                index++
-            }
-
-            buttonAdd.setOnClickListener {
-                    if (index > imageIdList.size - 1) index = 0
-                    val product = Product(imageIdList[index], "Product $index", "100 рублей")
-                    adapter.addProduct(product)
-                    index++
-                animationShopCount()
-            }
         }
     }
 
+    fun requestServer() {
+        thread {
+            val request = Request.Builder()
+                .url(URL)
+                .addHeader("User-Agent", userAgentAndroid!!)
+                .build()
 
-    private fun animationShopCount() {
-        binding.countShop.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse))
+            val client = OkHttpClient()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    runOnUiThread() {
+                        showToast("Сервер недоступен. Повторите позже")
+                    }
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    var jsonString = response.body!!.string()
+                    var jsonObject = JSONObject(jsonString)
+                    var jsonArray: JSONArray = jsonObject.getJSONArray("products")
+
+                    runOnUiThread {
+                        pushData(jsonArray)
+
+                        binding.apply {
+                            progressBar.visibility = View.GONE
+                        }
+
+                    }
+                }
+            })
+        }
     }
 
+    fun pushData(jsonArray: JSONArray) {
+        for (i in 0 until jsonArray.length()) {
+            val product = Product(
+                imageIdList[i],
+                jsonArray.getJSONObject(i).getString("title"),
+                jsonArray.getJSONObject(i).getString("price"),
+                0
+            )
+            adapter.addProduct(product)
+        }
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    fun animationShopCount() {
+        binding.apply {
+
+            buttonShopBasket.startAnimation(
+                AnimationUtils.loadAnimation(
+                    this@MainActivity,
+                    R.anim.pulse
+                )
+            )
+
+            countShopTextView.startAnimation(
+                AnimationUtils.loadAnimation(
+                    this@MainActivity,
+                    R.anim.pulse
+                )
+            )
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.settings -> {
+                replaceActivity(SettingsActivity())
+                showToast("Настройки")
+            }
+            R.id.terms_of_use -> {
+                replaceActivity(TermsOfUseActivity())
+            }
+            R.id.about -> {
+                val versionApp = resources.getString(R.string.versionApp)
+                showToast("Версия $versionApp")
+            }
+        }
+        return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.updateList()
+    }
 }

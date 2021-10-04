@@ -1,5 +1,3 @@
-package com.codeuphoria.alco38.adapter
-
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View

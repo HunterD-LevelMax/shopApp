@@ -9,4 +9,7 @@ class TermsOfUseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_terms_of_use)
     }
+
+
+
 }
