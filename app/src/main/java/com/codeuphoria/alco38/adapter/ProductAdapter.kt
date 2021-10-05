@@ -4,10 +4,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.MainThread
 import androidx.recyclerview.widget.RecyclerView
 import com.codeuphoria.alco38.R
-import com.codeuphoria.alco38.activity.MainActivity
 import com.codeuphoria.alco38.costShop
 import com.codeuphoria.alco38.data.Product
 import com.codeuphoria.alco38.databinding.ProductItemBinding
