@@ -3,6 +3,7 @@ package com.codeuphoria.alco38.activity
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,7 +21,6 @@ class ShoppingBasketActivity : AppCompatActivity() {
     private lateinit var binding: ActivityShoppingBasketBinding
 
     private val adapter = ProductAdapterShop(productListInShop)
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,9 +65,7 @@ class ShoppingBasketActivity : AppCompatActivity() {
             jGroup.put("price", productListInShop[i].price)
             jGroup.put("amount",productListInShop[i].amount)
 
-            val jOuter = JSONObject()
-            jOuter.put("product №" + i, jGroup)
-            jArray.put(jOuter)
+            jArray.put(jGroup)
         }
         val order = JSONObject()
         order.put("number", "89999999999")
@@ -75,8 +73,13 @@ class ShoppingBasketActivity : AppCompatActivity() {
         jArray.put(order)
 
         jsonRes.put("order", jArray)
+        Log.d("Server", jsonRes.toString())
+
         return jsonRes.toString()
-    }    private fun sendOrder(){
+    }
+
+
+    private fun sendOrder(){
         thread {
             val okHttpClient = OkHttpClient()
 

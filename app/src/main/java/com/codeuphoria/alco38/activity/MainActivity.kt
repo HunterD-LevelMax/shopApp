@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 if (checkShopList()) {
                     replaceActivity(ShoppingBasketActivity())
                 } else {
-                    showToast("Выберите продукты")
+                    showToast(getString(R.string.choose_product))
                 }
             }
         }
