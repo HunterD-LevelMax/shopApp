@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:theme="@style/Theme.Dialog">
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:contentDescription="ввод номера телефона"
+        android:hint="@string/phone_number"
+        android:inputType="textEmailAddress" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/place_an_order"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>

@@ -43,4 +43,6 @@
         11.	Вся информация на сайте предназначена для лиц старше (восемнадцати лет). Подтверждая свой возраст, пользователь принимает всю ответственность.
 </string>
     <string name="choose_product">Выберите продукты</string>
+    <string name="phone_number">номер телефона</string>
+    <string name="place_an_order">Оформить заказ</string>
 </resources>

@@ -20,4 +20,31 @@
 
     </style>
 
+
+
+    <style name="Theme.Dialog" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/red_pepper</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/red_pepper</item> // Цвет задников кнопок
+        <item name="colorSecondaryVariant">@color/warm_grey</item>
+
+        <item name="colorOnSecondary">#FFFFFF</item>  // цвет значков на кнопках
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/red_pepper</item>
+        <!-- Customize your theme here. -->
+        <item name="android:navigationBarColor">#050608</item>
+
+        <item name="android:textColor">@color/black</item>
+        //Цвет текста
+
+    </style>
+
+
+
+
+
+
 </resources>

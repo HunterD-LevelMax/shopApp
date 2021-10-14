@@ -14,6 +14,7 @@ import okhttp3.*
 import okio.IOException
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.thread
 
@@ -30,10 +31,7 @@ class ShoppingBasketActivity : AppCompatActivity() {
         jsonString = createJsonString()
 
         binding.apply {
-
-            costTextView.text = "Итого: $costShop рублей (с учетом доставки)"
-
-
+           costTextView.text = "Итого: $costShop рублей (с учетом доставки)"
            buttonAcceptOrder.setOnClickListener {
                checkMinShop()
            }
@@ -52,13 +50,15 @@ class ShoppingBasketActivity : AppCompatActivity() {
     }
 
 
-    private fun getNumber() {
-
+    private fun getCurrentTimestamp(): String {
+        return System.currentTimeMillis().toString()
     }
 
     private fun createJsonString(): String {
-        val jsonRes = JSONObject()
         val jArray = JSONArray()
+        val orderDate = JSONObject()
+        val jsonRes = JSONObject()
+
         for ( i in 0 until productListInShop.size) {
             val jGroup = JSONObject()
             jGroup.put("title", productListInShop[i].title)
@@ -67,10 +67,10 @@ class ShoppingBasketActivity : AppCompatActivity() {
 
             jArray.put(jGroup)
         }
-        val order = JSONObject()
-        order.put("number", "89999999999")
-        order.put("date", Calendar.getInstance().time)
-        jArray.put(order)
+
+        orderDate.put("number", "89999999999")
+        orderDate.put("date", getCurrentTimestamp())
+        jArray.put(orderDate)
 
         jsonRes.put("order", jArray)
         Log.d("Server", jsonRes.toString())
@@ -102,7 +102,6 @@ class ShoppingBasketActivity : AppCompatActivity() {
                     runOnUiThread{
                         showToast("Ok")
                     }
-
                 }
             })
         }
