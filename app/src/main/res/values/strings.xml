@@ -45,4 +45,6 @@
     <string name="choose_product">Выберите продукты</string>
     <string name="phone_number">номер телефона</string>
     <string name="place_an_order">Оформить заказ</string>
+    <string name="content_description_input_number">ввод номера телефона</string>
+    <string name="clean_shop">Очистить корзину</string>
 </resources>

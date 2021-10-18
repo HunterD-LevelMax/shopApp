@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             buttonShopBasket.setOnClickListener {
 
-
                 if (checkShopList()) {
                     replaceActivity(ShoppingBasketActivity())
                 } else {
@@ -135,6 +134,10 @@ class MainActivity : AppCompatActivity() {
             R.id.about -> {
                 val versionApp = resources.getString(R.string.versionApp)
                 showToast("Версия $versionApp")
+            }
+            R.id.clean_shop ->{
+                showToast("Корзина очищена")
+                productListInShop.clear()
             }
         }
         return true

@@ -17,7 +17,13 @@
     <item
         android:id="@+id/about"
         android:icon="@drawable/icon_app"
-        android:orderInCategory="3"
+        android:orderInCategory="4"
         android:title="@string/title_version" />
+
+    <item
+        android:id="@+id/clean_shop"
+        android:title="@string/clean_shop"
+        android:orderInCategory="3"
+        />
 
 </menu>
