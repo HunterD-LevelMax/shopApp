@@ -137,7 +137,6 @@ class ShoppingBasketActivity : AppCompatActivity() {
                 .url(URL_POST)
                 .method("POST", requestBody)
                 .build()
-
             okHttpClient.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     runOnUiThread {
