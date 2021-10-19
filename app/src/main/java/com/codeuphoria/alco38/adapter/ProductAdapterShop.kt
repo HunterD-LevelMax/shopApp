@@ -11,7 +11,7 @@ import com.codeuphoria.alco38.databinding.ProductItemShopBinding
 
 class ProductAdapterShop(private val arrayProduct: ArrayList<Product>): RecyclerView.Adapter<ProductAdapterShop.ProductHolderShop>() {
 
-    class ProductHolderShop(item: View, val arrayProduct: java.util.ArrayList<Product>) : RecyclerView.ViewHolder(item) {
+    class ProductHolderShop(item: View) : RecyclerView.ViewHolder(item) {
         val binding = ProductItemShopBinding.bind(item)
 
         fun bind(product: Product) = with(binding) {
@@ -22,7 +22,7 @@ class ProductAdapterShop(private val arrayProduct: ArrayList<Product>): Recycler
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+
     fun addProduct(product: Product) {
         arrayProduct.add(product)
         updateList()
@@ -35,7 +35,7 @@ class ProductAdapterShop(private val arrayProduct: ArrayList<Product>): Recycler
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductHolderShop {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.product_item_shop, parent, false)
-        return ProductHolderShop(view,arrayProduct)
+        return ProductHolderShop(view)
     }
 
     override fun onBindViewHolder(holder: ProductHolderShop, position: Int) {

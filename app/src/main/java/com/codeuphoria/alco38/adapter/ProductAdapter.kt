@@ -11,10 +11,13 @@ import com.codeuphoria.alco38.data.Product
 import com.codeuphoria.alco38.databinding.ProductItemBinding
 import com.codeuphoria.alco38.productListInShop
 
+
+
+
 class ProductAdapter(private val arrayProduct: ArrayList<Product>): RecyclerView.Adapter<ProductAdapter.ProductHolder>() {
 
-    class ProductHolder(item: View, val arrayProduct: java.util.ArrayList<Product>) : RecyclerView.ViewHolder(item) {
-        val binding = ProductItemBinding.bind(item)
+    class ProductHolder(item: View) : RecyclerView.ViewHolder(item) {
+        private val binding = ProductItemBinding.bind(item)
         fun bind(product: Product) = with(binding) {
             itemImage.setImageResource(product.imageId)
             itemTitle.text = product.title
@@ -23,9 +26,6 @@ class ProductAdapter(private val arrayProduct: ArrayList<Product>): RecyclerView
 
             buttonAddProduct.setOnClickListener {
                 amountProduct.text = product.amount.toString()
-                //ProductAdapter().notifyItemChanged(adapterPosition)
-                // Log.d("Update", adapterPosition.toString())
-
                 productListInShop.
                 add(Product(
                     product.imageId,
@@ -38,22 +38,20 @@ class ProductAdapter(private val arrayProduct: ArrayList<Product>): RecyclerView
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun addProduct(product: Product) {
         arrayProduct.add(product)
         updateList()
-
     }
+
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateList() {
         notifyDataSetChanged()
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.product_item, parent, false)
-        return ProductHolder(view,arrayProduct)
+        return ProductHolder(view)
     }
 
     override fun onBindViewHolder(holder: ProductHolder, position: Int) {

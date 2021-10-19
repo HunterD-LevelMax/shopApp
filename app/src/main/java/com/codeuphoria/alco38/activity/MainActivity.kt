@@ -1,5 +1,7 @@
 package com.codeuphoria.alco38.activity
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -15,45 +17,52 @@ import okhttp3.*
 import okio.IOException
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.*
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
     private val adapter = ProductAdapter(productList)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        init()
+    }
+
+
+    private fun checkShopList(): Boolean {
+        return productListInShop.size != 0
+    }
+
+    private fun init() {
+
         binding.apply {
             buttonShopBasket.setOnClickListener {
-
                 if (checkShopList()) {
                     replaceActivity(ShoppingBasketActivity())
                 } else {
                     showToast(getString(R.string.choose_product))
                 }
             }
-        }
+            buttonRefresh.setOnClickListener {
+                requestServer()
+                buttonRefresh.visibility = View.GONE
+                progressBar.visibility = View.VISIBLE
+            }
 
-        init()
-        requestServer()
-    }
-
-    fun checkShopList(): Boolean {
-        return productListInShop.size != 0
-    }
-
-    private fun init() {
-        binding.apply {
             recyclerProducts.layoutManager = GridLayoutManager(this@MainActivity, 1)
             recyclerProducts.adapter = adapter
         }
+
+        createUUID()
+        requestServer()
     }
 
-    fun requestServer() {
+    private fun requestServer() {
         thread {
             val request = Request.Builder()
                 .url(URL)
@@ -64,29 +73,42 @@ class MainActivity : AppCompatActivity() {
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     runOnUiThread() {
+                        setVisibleView(false)
                         showToast("Сервер недоступен. Повторите позже")
                     }
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    var jsonString = response.body!!.string()
-                    var jsonObject = JSONObject(jsonString)
-                    var jsonArray: JSONArray = jsonObject.getJSONArray("products")
+                    val jsonString = response.body!!.string()
+                    val jsonObject = JSONObject(jsonString)
+                    val jsonArray: JSONArray = jsonObject.getJSONArray("products")
 
                     runOnUiThread {
+                        setVisibleView(true)
                         pushData(jsonArray)
-
-                        binding.apply {
-                            progressBar.visibility = View.GONE
-                        }
-
                     }
                 }
             })
         }
     }
 
-    fun pushData(jsonArray: JSONArray) {
+
+    private fun setVisibleView(flag: Boolean) {
+        when (flag) {
+            false -> binding.apply {
+                progressBar.visibility = View.GONE
+                buttonRefresh.visibility = View.VISIBLE
+            }
+            true -> {
+                binding.apply {
+                    progressBar.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+
+    private fun pushData(jsonArray: JSONArray) {
         for (i in 0 until jsonArray.length()) {
             val product = Product(
                 imageIdList[i],
@@ -103,16 +125,14 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    fun animationShopCount() {
+    private fun animationShopCount() {
         binding.apply {
-
             buttonShopBasket.startAnimation(
                 AnimationUtils.loadAnimation(
                     this@MainActivity,
                     R.anim.pulse
                 )
             )
-
             countShopTextView.startAnimation(
                 AnimationUtils.loadAnimation(
                     this@MainActivity,
@@ -135,12 +155,29 @@ class MainActivity : AppCompatActivity() {
                 val versionApp = resources.getString(R.string.versionApp)
                 showToast("Версия $versionApp")
             }
-            R.id.clean_shop ->{
+            R.id.clean_shop -> {
                 showToast("Корзина очищена")
                 productListInShop.clear()
             }
         }
         return true
+    }
+
+    private fun createUUID() {
+        uuid = getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE)
+            .getString("UUID", "empty").toString()
+
+        if (uuid == "empty") {
+            uuid = UUID.randomUUID().toString()
+            saveUUID(uuid)
+        }
+    }
+
+    private fun saveUUID(uuid: String) {
+        val sharedPreferences: SharedPreferences? =
+            this.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor? = sharedPreferences?.edit()
+        editor?.apply { putString("UUID", uuid) }?.apply()
     }
 
     override fun onResume() {

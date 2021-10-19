@@ -1,13 +1,25 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:theme="@style/Theme.Dialog">
+        android:padding="0dp">
+
+        <TextView
+            android:id="@+id/title_number_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:paddingTop="16dp"
+            android:text="Подтвердите свой номер"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/input_number"
@@ -17,15 +29,19 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
             android:hint="@string/phone_number"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:minHeight="48dp"
+            android:padding="16dp" />
 
         <Button
             android:id="@+id/button_send"
             android:layout_width="match_parent"
             android:layout_height="65dp"
+            android:padding="0dp"
             android:text="@string/place_an_order"
             android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:iconPadding="0dp" />
 
     </LinearLayout>
 

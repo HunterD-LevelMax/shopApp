@@ -47,4 +47,5 @@
     <string name="place_an_order">Оформить заказ</string>
     <string name="content_description_input_number">ввод номера телефона</string>
     <string name="clean_shop">Очистить корзину</string>
+    <string name="refresh_list">Обновить страницу</string>
 </resources>

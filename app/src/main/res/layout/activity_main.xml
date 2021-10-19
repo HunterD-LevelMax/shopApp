@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="43dp"
+        android:layout_marginBottom="45dp"
         android:elevation="7dp"
         android:maxLength="5"
         android:text="0"
@@ -67,5 +67,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/recyclerProducts"
         app:layout_constraintTop_toTopOf="@+id/recyclerProducts" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:contentDescription="@string/refresh_list"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recyclerProducts"
+        app:srcCompat="@drawable/ic_refresh" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

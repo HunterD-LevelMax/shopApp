@@ -11,6 +11,8 @@ const val PREFERENCE = "PREFERENCE"
 
 val versionCode = System.getProperty("http.agent").toString() + "\n" + "(с) Все права защищены"
 
+var uuid = ""
+
 fun AppCompatActivity.replaceActivity(activity: AppCompatActivity) {
     val intent = Intent(this, activity::class.java)
     startActivity(intent)
@@ -23,11 +25,11 @@ fun Activity.showToast(message: String) {
 
 var costShop: Int = 300 // с учетом доставки
 
+var countSize: Int = 0
+
 var productList = ArrayList<Product>()
 
 var productListInShop = ArrayList<Product>()
-
-var number = ""
 
 var jsonString: String = ""
 
