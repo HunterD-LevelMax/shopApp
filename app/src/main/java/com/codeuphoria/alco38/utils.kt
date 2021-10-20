@@ -23,7 +23,7 @@ fun Activity.showToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
-var costShop: Int = 300 // с учетом доставки
+var costShop: Int = 0 // без учета доставки
 
 var countSize: Int = 0
 

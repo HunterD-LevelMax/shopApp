@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val adapter = ProductAdapter(productList)
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -33,9 +32,8 @@ class MainActivity : AppCompatActivity() {
         init()
     }
 
-
     private fun checkShopList(): Boolean {
-        return productListInShop.size != 0
+        return true
     }
 
     private fun init() {
@@ -156,8 +154,9 @@ class MainActivity : AppCompatActivity() {
                 showToast("Версия $versionApp")
             }
             R.id.clean_shop -> {
-                showToast("Корзина очищена")
                 productListInShop.clear()
+                costShop = 0
+                showToast("Корзина очищена")
             }
         }
         return true

@@ -1,32 +1,26 @@
 package com.codeuphoria.alco38.activity
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.EditText
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.codeuphoria.alco38.*
 import com.codeuphoria.alco38.adapter.ProductAdapterShop
 import com.codeuphoria.alco38.databinding.ActivityShoppingBasketBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import okhttp3.*
 import okio.IOException
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
 import kotlin.concurrent.thread
-import android.view.Gravity
-
-import android.view.WindowManager
-import com.google.android.material.bottomsheet.BottomSheetDialog
-
-
-
 
 
 class ShoppingBasketActivity : AppCompatActivity() {
@@ -40,15 +34,22 @@ class ShoppingBasketActivity : AppCompatActivity() {
         binding = ActivityShoppingBasketBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         binding.apply {
-            costTextView.text = "Итого: $costShop рублей (с учетом доставки)"
+            costTextView.text = "Итого: $costShop рублей (без учета доставки)"
+
             buttonAcceptOrder.setOnClickListener {
                 //checkMinShop()
-                showDialogNumber()
+                if (productListInShop.size != 0) {
+                    showDialogNumber()
+                    costShop + 300
+                }
             }
         }
         init()
     }
+
 
     private fun checkMinShop() {
         if (costShop <= 990) {
@@ -58,20 +59,8 @@ class ShoppingBasketActivity : AppCompatActivity() {
         }
     }
 
+
     private fun showDialogNumber() {
-   //     val mDialogView = LayoutInflater.from(this).inflate(R.layout.number_dialog, null)
-
-
-//        val mBuilder = AlertDialog.Builder(this)
-//            .setView(mDialogView)
-//            .setTitle("Введите свой номер телефона")
-//
-//
-//
-//        val mAlertDialog = mBuilder.show()
-
-
-
         val mBottomSheetDialog = BottomSheetDialog(this)
         val sheetView: View =
             this.layoutInflater.inflate(R.layout.number_dialog, null)
@@ -79,6 +68,10 @@ class ShoppingBasketActivity : AppCompatActivity() {
 
         val editText: EditText = sheetView.findViewById(R.id.input_number)
         val buttonSend: Button = sheetView.findViewById(R.id.button_send)
+
+        mBottomSheetDialog.window?.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+        )
 
         mBottomSheetDialog.show()
 
@@ -165,7 +158,12 @@ class ShoppingBasketActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     private fun init() {
         binding.apply {
-            recyclerOrder.layoutManager = GridLayoutManager(this@ShoppingBasketActivity, 2)
+            if (productListInShop.size == 0) {
+                titleEmptyShop.visibility = View.VISIBLE
+            } else {
+                titleEmptyShop.visibility = View.GONE
+            }
+            recyclerOrder.layoutManager = GridLayoutManager(this@ShoppingBasketActivity, 1)
             recyclerOrder.adapter = adapter
         }
     }
@@ -191,6 +189,7 @@ class ShoppingBasketActivity : AppCompatActivity() {
             }
             R.id.clean_shop -> {
                 productListInShop.clear()
+                costShop = 0
                 showToast("Корзина очищена")
                 adapter.notifyDataSetChanged()
                 finish()

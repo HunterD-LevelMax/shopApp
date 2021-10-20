@@ -15,11 +15,16 @@
         <entry key="..\:/Android Projects/Alco38/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3828125" />
         <entry key="..\:/Android Projects/github/shopApp/app/src/main/res/layout/activity_terms_of_use.xml" value="0.1" />
         <entry key="..\:/Android Projects/github/shopApp/app/src/main/res/layout/product_item.xml" value="0.1" />
+        <entry key="..\:/Android Studio/shopApp/app/src/main/res/drawable/ic_baseline_add_50.xml" value="0.3828125" />
+        <entry key="..\:/Android Studio/shopApp/app/src/main/res/drawable/ic_remove_50.xml" value="0.3828125" />
+        <entry key="..\:/Android Studio/shopApp/app/src/main/res/drawable/ic_settings_50.xml" value="0.3828125" />
         <entry key="..\:/Android Studio/shopApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Android Studio/shopApp/app/src/main/res/layout/activity_settings.xml" value="0.221875" />
-        <entry key="..\:/Android Studio/shopApp/app/src/main/res/layout/activity_shopping_basket.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android Studio/shopApp/app/src/main/res/layout/activity_shopping_basket.xml" value="0.33" />
         <entry key="..\:/Android Studio/shopApp/app/src/main/res/layout/activity_test_json.xml" value="0.2957427536231884" />
         <entry key="..\:/Android Studio/shopApp/app/src/main/res/layout/number_dialog.xml" value="0.33" />
+        <entry key="..\:/Android Studio/shopApp/app/src/main/res/layout/product_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android Studio/shopApp/app/src/main/res/layout/product_item_shop.xml" value="0.5" />
         <entry key="..\:/Android Studio/shopApp/app/src/main/res/menu/menu.xml" value="0.36666666666666664" />
       </map>
     </option>
