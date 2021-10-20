@@ -103,7 +103,7 @@
                     android:visibility="visible">
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/button_remove_product_shop"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_marginRight="5dp"
@@ -121,7 +121,7 @@
                         android:visibility="visible" />
 
                     <Button
-                        android:id="@+id/button2"
+                        android:id="@+id/button_add_product_shop"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="5dp"

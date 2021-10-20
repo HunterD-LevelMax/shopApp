@@ -44,6 +44,8 @@ class ShoppingBasketActivity : AppCompatActivity() {
                 if (productListInShop.size != 0) {
                     showDialogNumber()
                     costShop + 300
+                }else{
+                    showToast("Добавь понравившийся товар")
                 }
             }
         }

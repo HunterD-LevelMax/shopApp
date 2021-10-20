@@ -19,6 +19,18 @@ class ProductAdapterShop(private val arrayProduct: ArrayList<Product>): Recycler
             itemTitleShop.text = product.title
             itemPriceShop.text = product.price
             amountProductShop.text = product.amount.toString()
+
+            buttonAddProductShop.setOnClickListener {
+                product.amount++
+                amountProductShop.text = product.amount.toString()
+            }
+
+            buttonRemoveProductShop.setOnClickListener {
+                product.amount--
+                amountProductShop.text = product.amount.toString()
+            }
+
+
         }
     }
 
